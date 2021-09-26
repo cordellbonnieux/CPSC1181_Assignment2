@@ -1,4 +1,3 @@
-import java.util.*;
 /**
  * Train.class
  *  
@@ -8,7 +7,8 @@ import java.util.*;
  *  and an integer array of freight cars where the integer value of each array item 
  *  represents the weight(in tons) of that car.
  * 
- * @author Cordell Bonnieux	@version 1.0.0
+ * @author Cordell Bonnieux	
+ * @version 1.0.0
  */
 
 public class Train {
@@ -18,26 +18,87 @@ public class Train {
 	private int[] cars = new int[0];
 	
 	/**
-	 * Train() - constructor method, used to create an instance of Train.
-	 * @param n
-	 * @param p
-	 * @throws Exception
+	 * Train Constructor
+	 * Used to create an instance of Train.
+	 * @param n String representing the name.
+	 * @param p integer representing the power.
+	 * @throws Exception IllegalArgumentException thrown if (n < 0) OR (p < 0).
 	 */
 	public Train(String n, int p) throws Exception{
-		if (n.length() < 1) {
-			throw new IllegalArgumentException("Parameter n for train must not be empty");
+		if (n == null) {
+			throw new IllegalArgumentException("Name cannot be empty.");
 		} else if (p < 0) {
-			throw new IllegalArgumentException("power cannot be negative");
+			throw new IllegalArgumentException("Power must be greater than zero.");
 		}
 		this.name = n;
 		this.power = p;
 	}
 	
 	/**
-	 * setCars() - adds cars to the end of an instance's cars array.
+	 * Set Name
+	 * Sets the name of the caller instance.
+	 * @param n String representing the name.
+	 */
+	public void setName(String n) {
+		this.name = n;
+	}
+	
+	/**
+	 * Get Name
+	 * Returns the name of the caller instance.
+	 * @return String representing the name.
+	 */
+	public String getName() {
+		String n = this.name;
+		return n;
+	}
+	
+	/**
+	 * Set Power
+	 * Sets the power of the caller instance.
+	 * @param p integer representing the power.
+	 */
+	public void setPower(int p) {
+		this.power = p;
+	}
+	
+	/**
+	 * Get Power
+	 * Returns the power of the caller instance.
+	 * @return integer representing the power.
+	 */
+	public int getPower() {
+		int p = this.power;
+		return p;
+	}
+	
+	/**
+	 * setCars()
+	 * Sets the caller instance's cars array. 
+	 * To append cars to the existing array use addCars(int[]).
+	 * @param c
+	 * @throws Exception
+	 */
+	public void setCars(int... c) throws Exception {
+		int[] newCars = new int[c.length];
+		for (int i = 0; i < newCars.length; i++) {
+			if (newCars[i] < 0) {
+				throw new IllegalArgumentException("Car weight cannot be negative.");
+			}
+			newCars[i] = c[i];
+		}
+		this.cars = new int[newCars.length];
+		for (int i = 0; i < newCars.length; i++) {
+			this.cars[i] = newCars[i];
+		}
+	}
+	
+	/**
+	 * addCars()
+	 * Appends cars to the end of an instance's cars array.
 	 * @param c
 	 */
-	private void setCars(int... c) throws Exception{
+	public void addCars(int... c) throws Exception{
 		int[] newCars = new int[c.length + this.cars.length];
 		for (int i = 0; i < newCars.length; i++) {
 			if (newCars[i] < 0) {
@@ -60,7 +121,7 @@ public class Train {
 	 * getCars() - Creates and returns a copy of the current instance's cars array.
 	 * @return
 	 */
-	private int[] getCars() {
+	public int[] getCars() {
 		int[] carsCopy = new int[this.cars.length];
 		for (int i = 0; i < this.cars.length; i++) {
 			carsCopy[i] = this.cars[i];
@@ -73,7 +134,7 @@ public class Train {
 	 * of the caller's cars array items.
 	 * @return 
 	 */
-	private int getTotalWeightOfCars() {
+	public int getTotalWeightOfCars() {
 		int total = 0;
 		for (int i = 0; i < this.cars.length; i++) {
 			total += this.cars[i];
@@ -85,7 +146,7 @@ public class Train {
 	 * getNumberOfCars() - Returns the number of items in the caller's cars array.
 	 * @return
 	 */
-	private int getNumberOfCars() {
+	public int getNumberOfCars() {
 		return getCars().length;
 	}
 	
@@ -96,7 +157,7 @@ public class Train {
 	 * is truncated to 150.
 	 * @return
 	 */
-	private int maxSpeed() {
+	public int maxSpeed() {
 		int speed = this.power - this.getTotalWeightOfCars(); 
 		if (speed > 150) {
 			return 150;
@@ -108,7 +169,7 @@ public class Train {
 	/**
 	 * removeAllCars() - Removes all items from the caller's cars array.
 	 */
-	private void removeAllCars() {
+	public void removeAllCars() {
 		this.cars = new int[0];
 	}
 	
@@ -116,7 +177,7 @@ public class Train {
 	 * mergeTrains() -
 	 * @param other
 	 */
-	private void mergeTrains(Train other) {
+	public void mergeTrains(Train other) {
 		this.power += other.power;
 		int[] mergedCars = new int[this.cars.length + other.cars.length];
 		for (int i = 0; i < (other.cars.length + this.cars.length); i++) {
@@ -138,7 +199,7 @@ public class Train {
 	 * toString()
 	 * @return
 	 */
-	private String toString() {
+	public String toString() {
 		String info = "*** Train Info ***" + "\n";
 		info += "name: " + this.name + "\n";
 		info += "power: " + this.power + "\n";
