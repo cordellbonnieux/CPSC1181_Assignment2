@@ -22,16 +22,14 @@ public class Train {
 	 * Used to create an instance of Train.
 	 * @param n String representing the name.
 	 * @param p integer representing the power.
-	 * @throws Exception IllegalArgumentException thrown if (n < 0) OR (p < 0).
 	 */
-	public Train(String n, int p) throws Exception{
-		if (n == null) {
-			throw new IllegalArgumentException("Name cannot be empty.");
-		} else if (p < 0) {
-			throw new IllegalArgumentException("Power must be greater than zero.");
+	public Train(String n, int p) {
+		if (p < 0) { 
+			this.power = 0;
+		} else {
+			this.power = p;
 		}
 		this.name = n;
-		this.power = p;
 	}
 	
 	/**
@@ -59,7 +57,11 @@ public class Train {
 	 * @param p integer representing the power.
 	 */
 	public void setPower(int p) {
-		this.power = p;
+		if (p < 0) { 
+			this.power = 0;
+		} else {
+			this.power = p;
+		}
 	}
 	
 	/**
@@ -76,17 +78,25 @@ public class Train {
 	 * setCars()
 	 * Sets the caller instance's cars array. 
 	 * To append cars to the existing array use addCars(int[]).
+	 * The minimum weight for a car is 1 ton, if zero or a negative integer 
+	 * is included, it's value is raised to 1.
 	 * @param c
 	 * @throws Exception
 	 */
-	public void setCars(int... c) throws Exception {
+	public void setCars(int... c) {
+		if (c == null) {
+			c = new int[0];
+		}
 		int[] newCars = new int[c.length];
 		for (int i = 0; i < newCars.length; i++) {
-			if (newCars[i] < 0) {
-				throw new IllegalArgumentException("Car weight cannot be negative.");
+			if (c[i] < 1) {
+				newCars[i] = 1;
+				
+			} else {
+				newCars[i] = c[i];	
 			}
-			newCars[i] = c[i];
 		}
+		
 		this.cars = new int[newCars.length];
 		for (int i = 0; i < newCars.length; i++) {
 			this.cars[i] = newCars[i];
@@ -96,21 +106,27 @@ public class Train {
 	/**
 	 * addCars()
 	 * Appends cars to the end of an instance's cars array.
+	 * The minimum weight for a car is 1 ton, if zero or a negative integer 
+	 * is included, it's value is raised to 1.
 	 * @param c
 	 */
-	public void addCars(int... c) throws Exception{
-		int[] newCars = new int[c.length + this.cars.length];
+	public void addCars(int... c) {	
+		if (c == null) {
+			c = new int[0];
+		}
+		int[] newCars = new int[c.length + this.cars.length];	
 		for (int i = 0; i < newCars.length; i++) {
-			if (newCars[i] < 0) {
-				throw new IllegalArgumentException("Car weight cannot be negative.");
-			}
 			if (i < this.cars.length) {
 				newCars[i] = this.cars[i];
 				
-			} else {
+			} else if (c[i - this.cars.length] >= 1){
 				newCars[i] = c[i - this.cars.length];
+				
+			} else {
+				newCars[i] = 1;
 			}
 		}
+		
 		this.cars = new int[newCars.length];
 		for (int i = 0; i < newCars.length; i++) {
 			this.cars[i] = newCars[i];
