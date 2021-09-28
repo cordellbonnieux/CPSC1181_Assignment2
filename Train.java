@@ -246,11 +246,19 @@ public class Train {
 	 */
 	public String toString() {
 		String info = "*** Train Info ***" + "\n";
-		info += "name: " + this.name + "\n";
-		info += "power: " + this.power + "\n";
-		info += "max speed: " + String.valueOf(this.maxSpeed()) + "\n";
-		info += "number of cars: " + String.valueOf(this.getNumberOfCars()) + "\n";
-		info += "total weight of cars: " + this.getTotalWeightOfCars() + "\n";
+		info += "Name: " + this.name + "\n";
+		info += "Power: " + this.power + "\n";
+		info += "Max speed: " + String.valueOf(this.maxSpeed()) + "\n";
+		info += "Number of cars: " + String.valueOf(this.getNumberOfCars()) + "\n";
+		info += "Total weight of cars: " + this.getTotalWeightOfCars() + "\n";
+		info += "Weight of Cars: ";
+		for (int i = 0; i < this.cars.length; i++) {
+			if (i != this.cars.length - 1) {
+				info += this.cars[i] + ", ";
+			} else {
+				info += this.cars[i];
+			}
+		}
 		return info;	
 	}
 }

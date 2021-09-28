@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 
 /**
+ * Train Test
+ * Used to test the Train class.
+ * 
  * @author Cordell Bonnieux
  * @since September 27 2021
  * 
@@ -16,7 +19,6 @@ public class TrainTest {
 	@Test
 	@DisplayName("Test Name")
 	void setNameTest() {
-		
 		train1 = new Train("Moro", 120);
 		assertEquals("Moro", train1.getName());
 		
@@ -46,7 +48,6 @@ public class TrainTest {
 	@Test
 	@DisplayName("Test Power")
 	void setPowerTest() {
-
 		train1 = new Train("Dean", 1);
 		assertEquals(1, train1.getPower());
 		
@@ -73,7 +74,6 @@ public class TrainTest {
 	@Test
 	@DisplayName("Test Cars Array")
 	void testCars() throws Exception{
-		
 		train1 = new Train("Thomas", 400);
 		int[] badValues = new int[] {52, 3, 24, 7, 84, 0, -3, 10}; // contains 0 & negative numbers
 		int[] goodValues = new int[] {5, 10, 15, 20, 25}; // reasonable weights in tons for a train cars
@@ -119,7 +119,6 @@ public class TrainTest {
 	@Test
 	@DisplayName("Test Cars Array for Null")
 	void testCarsForNull() throws Exception {
-		
 		train2 = new Train("Duckie", 100);
 		
 		try {
@@ -155,7 +154,6 @@ public class TrainTest {
 	@Test
 	@DisplayName("Test Merging Trains")
 	void testMergeTrains () throws Exception{
-		
 		// expected values for each train
 		int pow = 100, numOfCars = 5, totalWeight = 15;
 		int[] carsArray = new int[] {1, 2, 3, 4, 5}, mergedArrays = new int[] {1, 2, 3, 4, 5, 1, 2, 3, 4, 5};
@@ -196,5 +194,26 @@ public class TrainTest {
 		}
 		
 	}
-
+	
+	@Test
+	@DisplayName("Test To String")
+	void testToString() throws Exception {
+		train2 = new Train("Rodney", 82);
+		train2.setCars(22, 2, 8, 12, 17);
+		
+		String expected = "*** Train Info ***\n" + "Name: " + train2.getName() + "\n" + 
+				"Power: " + train2.getPower() + "\n" + "Max speed: " + train2.maxSpeed() + "\n" + 
+				"Number of cars: " + train2.getNumberOfCars() + "\n" + "Total weight of cars: " + train2.getTotalWeightOfCars() + "\n" + 
+				"Weight of Cars: ";
+		
+		for (int i = 0; i < train2.getCars().length; i++) {
+			if (i != train2.getCars().length - 1) {
+				expected += train2.getCars()[i] + ", ";
+			} else {
+				expected += train2.getCars()[i];
+			}
+		}
+		
+		assertEquals(expected, train2.toString());
+	}
 }
