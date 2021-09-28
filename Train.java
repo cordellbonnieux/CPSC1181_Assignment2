@@ -207,6 +207,9 @@ public class Train {
 	 * @param other
 	 */
 	public void mergeTrains(Train other) {
+		if (other.equals(null)) {
+			throw new NullPointerException("Train cannot be merged with null");
+		}
 		this.power += other.power;
 		int[] mergedCars = new int[this.cars.length + other.cars.length];
 		for (int i = 0; i < (other.cars.length + this.cars.length); i++) {

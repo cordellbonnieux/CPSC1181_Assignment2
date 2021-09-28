@@ -102,94 +102,99 @@ public class TrainTest {
 		train1.addCars(30, 35);
 		assertArrayEquals(new int[] {5, 10, 15, 20, 25, 30, 35}, train1.getCars());
 		
-		// ok now test all the other methods for the train cars!		
+		// Below are the other get methods 
+		int totalWeight = 5 + 10 + 15 + 20 + 25 + 30 + 35;
+		assertEquals(totalWeight, train1.getTotalWeightOfCars());
+		assertEquals(7, train1.getNumberOfCars());
+		
+		// expected max speed, maximum possible speed is 150
+		int maxSpeed = ((train1.getPower() - totalWeight) > 150) ? 150 : (train1.getPower() - totalWeight);
+		assertEquals(maxSpeed, train1.maxSpeed());
+		
+		train1.removeAllCars();
+		assertEquals(0, train1.getCars().length);
+	
 	}
 	
 	@Test
 	@DisplayName("Test Cars Array for Null")
 	void testCarsForNull() throws Exception {
 		
-		train2 = new Train("Terry", 100);
+		train2 = new Train("Duckie", 100);
+		
 		try {
-			train2.setCars(-24, -88, -300, 0, -10, 1);
+			train2.setCars(null);
+			fail("Null array should cause exception.");
 			
 		} catch (NullPointerException e) {
-			fail("Valid int[] threw exception \n" + e.getMessage());
+			assertEquals("Cars array cannot point to null", e.getMessage());
 		}
 		
-		assertEquals(6, train2.getTotalWeightOfCars());
-		assertEquals(train2.getTotalWeightOfCars(), train2.getNumberOfCars());
+		train2.setCars(1, 2);
+		assertArrayEquals(new int[] {1, 2}, train2.getCars());
 		
-		train1 = new Train("Skeeter", 69);
+		
 		try {
-			train1.setCars(null);
-			fail("Null should throw an exception.");
+			train2.addCars(null);
+			fail("Null array should cause exception.");
 			
 		} catch (NullPointerException e) {
-			assertEquals(e.getMessage(), "null");
-			
+			assertEquals("Cars array cannot point to null", e.getMessage());
 		}
 		
-		train1.setCars(0, -1, 300, 22, 1);
-		assertEquals(325, train1.getTotalWeightOfCars());
-		assertEquals(5, train1.getNumberOfCars());
+		train2.addCars(3, 4);
+		assertArrayEquals(new int[] {1, 2, 3, 4}, train2.getCars());
 		
-		train1.addCars(1, 2, -1, 0);
-		assertEquals(330, train1.getTotalWeightOfCars());
-		assertEquals(9, train1.getNumberOfCars());
-		
-		
-		
+		// .addCars() also works without .setCars() being used
+		train2.removeAllCars();
+		train2.addCars(10, 15);
+		assertArrayEquals(new int[] {10, 15}, train2.getCars());
+
 	}
 	
 	@Test
 	@DisplayName("Test Merging Trains")
 	void testMergeTrains () throws Exception{
 		
-		train1 = new Train("Denis", 44);
-		train2 = new Train("Julian", 66);
+		// expected values for each train
+		int pow = 100, numOfCars = 5, totalWeight = 15;
+		int[] carsArray = new int[] {1, 2, 3, 4, 5}, mergedArrays = new int[] {1, 2, 3, 4, 5, 1, 2, 3, 4, 5};
 		
-		try {
-			train1.setCars(1, 2, 3, 4, 5);
-			
-		} catch (NullPointerException e) {
-			fail("Valid int[] threw exception \n" + e.getMessage());
-		}
+		// two trains with the same values
+		train1 = new Train("Denis", pow);
+		train1.setCars(carsArray);
+		assertEquals(pow, train1.getPower());
+		assertEquals(numOfCars, train1.getNumberOfCars());
+		assertEquals(totalWeight, train1.getTotalWeightOfCars());
 		
-		assertEquals(5, train1.getNumberOfCars());
-		assertEquals(15, train1.getTotalWeightOfCars());
-		assertEquals(29, train1.maxSpeed());
+		train2 = new Train("Julian", pow);
+		train1.setCars(carsArray);
+		assertEquals(pow, train2.getPower());
+		assertEquals(numOfCars, train2.getNumberOfCars());
+		assertEquals(totalWeight, train2.getTotalWeightOfCars());
 		
-		try {
-			train2.setCars(6, 7, 8, 9, 10);
-			
-		} catch (NullPointerException e) {
-			fail("Valid int[] threw exception \n" + e.getMessage());
-		}
-		
-		assertEquals(5, train2.getNumberOfCars());
-		assertEquals(40, train2.getTotalWeightOfCars());
-		assertEquals(26, train2.maxSpeed());
-		
-		
-		int[] expectedCars = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-		int expectedWeight = 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10;
-		int expectedPower = train1.getPower() + train2.getPower();
-		int expectedMaxSpeed = train1.maxSpeed() + train2.maxSpeed();
-				
+		// train1 now has all attributes of train2 (excluding the same)
 		train1.mergeTrains(train2);
-		assertEquals(expectedMaxSpeed, train1.maxSpeed());
-		assertEquals(expectedPower, train1.getPower());
-		assertEquals(expectedWeight, train1.getTotalWeightOfCars());
-		assertArrayEquals(expectedCars, train1.getCars());
+		assertArrayEquals(mergedArrays, train1.getCars());
+		assertEquals(pow * 2, train1.getPower());
+		assertEquals(numOfCars * 2, train1.getNumberOfCars());
+		assertEquals(totalWeight * 2, train1.getTotalWeightOfCars());
 		
+		// train2 now has no power or cars
+		assertEquals(0, train2.getCars().length);
 		assertEquals(0, train2.getPower());
-		assertEquals(0, train2.maxSpeed());
+		assertEquals(0, train2.getNumberOfCars());
 		assertEquals(0, train2.getTotalWeightOfCars());
-		assertArrayEquals(new int[0], train2.getCars());
+		
+		// test merging with null 
+		try {
+			train2.mergeTrains(null);
+			fail("Null object pointer should throw exception.");
+			
+		} catch (NullPointerException e) {
+			assertEquals("Train cannot be merged with null", e.getMessage());
+		}
 		
 	}
-	
-	
 
 }
