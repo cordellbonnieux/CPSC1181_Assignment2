@@ -25,11 +25,18 @@ public class Train {
 	 */
 	public Train(String n, int p) {
 		if (p < 0) { 
-			this.power = 0;
+			throw new IllegalArgumentException("Power cannot be negative.");
+			
 		} else {
 			this.power = p;
 		}
-		this.name = n;
+		
+		if (n == null) {
+			throw new NullPointerException("Name cannot be null");
+			
+		} else {
+			this.name = n;	
+		}
 	}
 	
 	/**
@@ -38,9 +45,13 @@ public class Train {
 	 * @param n String representing the name.
 	 */
 	public void setName(String n) {
-		this.name = n;
+		if (n.equals(null)) {
+			throw new NullPointerException("Name cannot be null");
+			
+		} else {
+			this.name = n;
+		}
 	}
-	
 	/**
 	 * Get Name
 	 * Returns the name of the caller instance.
@@ -58,7 +69,8 @@ public class Train {
 	 */
 	public void setPower(int p) {
 		if (p < 0) { 
-			this.power = 0;
+			throw new IllegalArgumentException("Power cannot be negative.");
+			
 		} else {
 			this.power = p;
 		}
@@ -83,14 +95,14 @@ public class Train {
 	 * @param c
 	 * @throws Exception
 	 */
-	public void setCars(int... c) {
-		if (c == null) {
-			c = new int[0];
+	public void setCars(int... c) throws Exception{
+		if (c.equals(null)) {
+			throw new NullPointerException("Cars array cannot point to null");
 		}
 		int[] newCars = new int[c.length];
 		for (int i = 0; i < newCars.length; i++) {
 			if (c[i] < 1) {
-				newCars[i] = 1;
+				throw new IllegalArgumentException("Car weight cannot be negative or zero");
 				
 			} else {
 				newCars[i] = c[i];	
@@ -111,8 +123,8 @@ public class Train {
 	 * @param c
 	 */
 	public void addCars(int... c) {	
-		if (c == null) {
-			c = new int[0];
+		if (c.equals(null)) {
+			throw new NullPointerException("Cars array cannot point to null");
 		}
 		int[] newCars = new int[c.length + this.cars.length];	
 		for (int i = 0; i < newCars.length; i++) {
@@ -123,7 +135,7 @@ public class Train {
 				newCars[i] = c[i - this.cars.length];
 				
 			} else {
-				newCars[i] = 1;
+				throw new IllegalArgumentException("Car weight cannot be negative or zero");
 			}
 		}
 		
@@ -177,6 +189,7 @@ public class Train {
 		int speed = this.power - this.getTotalWeightOfCars(); 
 		if (speed > 150) {
 			return 150;
+			
 		} else {
 			return speed;
 		}
@@ -199,6 +212,7 @@ public class Train {
 		for (int i = 0; i < (other.cars.length + this.cars.length); i++) {
 			if (i < this.cars.length) {
 				mergedCars[i] = this.cars[i];
+				
 			} else {
 				mergedCars[i] = other.cars[i - this.cars.length];
 			}
