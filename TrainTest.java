@@ -127,7 +127,7 @@ public class TrainTest {
 			fail("Null array should cause exception.");
 			
 		} catch (NullPointerException e) {
-			assertEquals("Cars array cannot point to null", e.getMessage());
+			assertNull(e.getMessage());
 		}
 		
 		train2.setCars(1, 2);
@@ -139,7 +139,7 @@ public class TrainTest {
 			fail("Null array should cause exception.");
 			
 		} catch (NullPointerException e) {
-			assertEquals("Cars array cannot point to null", e.getMessage());
+			assertNull(e.getMessage());
 		}
 		
 		train2.addCars(3, 4);
@@ -168,7 +168,7 @@ public class TrainTest {
 		assertEquals(totalWeight, train1.getTotalWeightOfCars());
 		
 		train2 = new Train("Julian", pow);
-		train1.setCars(carsArray);
+		train2.setCars(carsArray);
 		assertEquals(pow, train2.getPower());
 		assertEquals(numOfCars, train2.getNumberOfCars());
 		assertEquals(totalWeight, train2.getTotalWeightOfCars());
@@ -192,7 +192,7 @@ public class TrainTest {
 			fail("Null object pointer should throw exception.");
 			
 		} catch (NullPointerException e) {
-			assertEquals("Train cannot be merged with null", e.getMessage());
+			assertNull(e.getMessage());
 		}
 		
 	}
