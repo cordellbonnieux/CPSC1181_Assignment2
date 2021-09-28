@@ -9,6 +9,7 @@
  * 
  * @author Cordell Bonnieux	
  * @version 1.0.0
+ * @since September 27 2021
  */
 
 public class Train {
@@ -20,8 +21,11 @@ public class Train {
 	/**
 	 * Train Constructor
 	 * Used to create an instance of Train.
+	 * n represents it's name, and p represents it's power.
 	 * @param n String representing the name.
 	 * @param p integer representing the power.
+	 * @exception IllegalArgumentException if p is negative
+	 * @exception NullPointerException if n is null
 	 */
 	public Train(String n, int p) {
 		if (p < 0) { 
@@ -43,6 +47,7 @@ public class Train {
 	 * Set Name
 	 * Sets the name of the caller instance.
 	 * @param n String representing the name.
+	 * @exception NullPointerException if n is null
 	 */
 	public void setName(String n) {
 		if (n.equals(null)) {
@@ -66,6 +71,7 @@ public class Train {
 	 * Set Power
 	 * Sets the power of the caller instance.
 	 * @param p integer representing the power.
+	 * @exception IllegalArgumentException if p is negative
 	 */
 	public void setPower(int p) {
 		if (p < 0) { 
@@ -87,13 +93,12 @@ public class Train {
 	}
 	
 	/**
-	 * setCars()
+	 * Set Cars
 	 * Sets the caller instance's cars array. 
 	 * To append cars to the existing array use addCars(int[]).
-	 * The minimum weight for a car is 1 ton, if zero or a negative integer 
-	 * is included, it's value is raised to 1.
-	 * @param c
-	 * @throws Exception
+	 * @param c an array of integers
+	 * @exception NullPointerException if c is null
+	 * @exception IllegalArgumentException if "i" in c is negative OR zero
 	 */
 	public void setCars(int... c) throws Exception{
 		if (c.equals(null)) {
@@ -116,11 +121,11 @@ public class Train {
 	}
 	
 	/**
-	 * addCars()
+	 * Add Cars
 	 * Appends cars to the end of an instance's cars array.
-	 * The minimum weight for a car is 1 ton, if zero or a negative integer 
-	 * is included, it's value is raised to 1.
-	 * @param c
+	 * @param c an array of integers
+	 * @exception NullPointerException if c is null
+	 * @exception IllegalArgumentException if "i" in c is negative OR zero
 	 */
 	public void addCars(int... c) {	
 		if (c.equals(null)) {
@@ -146,8 +151,9 @@ public class Train {
 	}
 	
 	/**
-	 * getCars() - Creates and returns a copy of the current instance's cars array.
-	 * @return
+	 * Get Cars
+	 * Creates and returns a copy of the current instance's cars array.
+	 * @return an array of integers, representing the train's car's weights
 	 */
 	public int[] getCars() {
 		int[] carsCopy = new int[this.cars.length];
@@ -158,9 +164,9 @@ public class Train {
 	}
 	
 	/**
-	 * getTotalWeightOfCars() - Adds and returns the sum of all 
-	 * of the caller's cars array items.
-	 * @return 
+	 * Get Total Weight Of Cars
+	 * Adds and returns the sum of all of the caller's cars array items.
+	 * @return an integer representing the summed weight of cars
 	 */
 	public int getTotalWeightOfCars() {
 		int total = 0;
@@ -171,19 +177,21 @@ public class Train {
 	}
 	
 	/**
-	 * getNumberOfCars() - Returns the number of items in the caller's cars array.
-	 * @return
+	 * Get Number Of Cars
+	 * Returns the number of items in the caller's cars array.
+	 * @return an integer representing the number of cars
 	 */
 	public int getNumberOfCars() {
 		return getCars().length;
 	}
 	
 	/**
-	 * maxSpeed() - Returns the total total speed of the caller's train,
+	 * Max Speed
+	 * Returns the total total speed of the caller's train,
 	 * which is calculated by subtracting the total weight of the cars array
 	 * from the train's power. If the power is over the maximum speed of 150, then the speed
 	 * is truncated to 150.
-	 * @return
+	 * @return an integer representing the maximum speed of the train
 	 */
 	public int maxSpeed() {
 		int speed = this.power - this.getTotalWeightOfCars(); 
@@ -196,15 +204,19 @@ public class Train {
 	}
 	
 	/**
-	 * removeAllCars() - Removes all items from the caller's cars array.
+	 * Remove All Cars
+	 * Removes all items from the caller's cars array.
 	 */
 	public void removeAllCars() {
 		this.cars = new int[0];
 	}
 	
 	/**
-	 * mergeTrains() -
-	 * @param other
+	 * Merge Trains
+	 * Merges other with the caller Train, by transferring other's power
+	 * and cars array to the caller.
+	 * @param other a Train object
+	 * @exception NullPointerException if other is null
 	 */
 	public void mergeTrains(Train other) {
 		if (other.equals(null)) {
@@ -229,8 +241,8 @@ public class Train {
 	}
 	
 	/**
-	 * toString()
-	 * @return
+	 * To String
+	 * @return a String describing the caller's attributes
 	 */
 	public String toString() {
 		String info = "*** Train Info ***" + "\n";

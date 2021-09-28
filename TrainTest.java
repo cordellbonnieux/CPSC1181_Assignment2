@@ -5,7 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 
 /**
  * @author Cordell Bonnieux
- * @since September 24 2021
+ * @since September 27 2021
  * 
  */
 public class TrainTest {
@@ -145,7 +145,7 @@ public class TrainTest {
 		train2.addCars(3, 4);
 		assertArrayEquals(new int[] {1, 2, 3, 4}, train2.getCars());
 		
-		// .addCars() also works without .setCars() being used
+		// .addCars() also works without .setCars() being used prior
 		train2.removeAllCars();
 		train2.addCars(10, 15);
 		assertArrayEquals(new int[] {10, 15}, train2.getCars());
